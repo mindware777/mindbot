@@ -1,0 +1,45 @@
+{
+  "name": "mindbot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "bun run validate:content && next build --webpack",
+    "start": "next start",
+    "lint": "eslint",
+    "validate:content": "bun scripts/validate-content.ts",
+    "build:pages": "bun run build && bun scripts/register-articles.ts",
+    "test": "bun test",
+    "test:db": "python3 scripts/test-database.py"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
+    "gray-matter": "^4.0.3",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@google/design.md": "^0.4.0",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@tailwindcss/turbopack": "^4",
+    "@types/bun": "^1.4.4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "bun@1.4.4",
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}
