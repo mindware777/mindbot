@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "validate:content": "bun scripts/validate-content.ts",
-    "build:pages": "bun run build && bun scripts/register-articles.ts",
+    "build:pages": "bun run build:workers",
     "test": "bun test",
-    "test:db": "python3 scripts/test-database.py"
+    "test:db": "python3 scripts/test-database.py",
+    "build:workers": "bun run build",
+    "deploy": "wrangler deploy",
+    "preview:workers": "wrangler dev --local"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
@@ -31,7 +34,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "4.158.0"
   },
   "packageManager": "bun@1.4.4",
   "ignoreScripts": [

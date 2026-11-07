@@ -43,3 +43,7 @@ next-env.d.ts
 !.env.example
 flarum
 
+
+# Cloudflare local state and secrets
+/.wrangler/
+.dev.vars*
