@@ -26,5 +26,5 @@ export default async function ArticlePage({params}: {params: Promise<{slug: stri
   const {slug} = await params;
   const article = publishedArticles().find(article => article.slug === slug);
   if (!article) notFound();
-  return <main className="site-shell reading-page"><Link href="/">← mindbot</Link><article className="prose"><p className="article-category tone-green">{article.category}</p><h1>{article.title}</h1><p className="article-summary">{article.summary}</p><time dateTime={article.publishedAt}>{article.publishedAt.slice(0,10)}</time>{parseContent(article.content).map((segment, index) => <Segment key={index} segment={segment}/>)}</article><Comments articleId={article.id}/></main>;
+  return <main className="reading-page"><nav className="breadcrumb" aria-label="Breadcrumb"><Link href="/news/">News</Link><span aria-hidden="true">/</span><span>{article.category}</span></nav><article className="prose"><p className="article-category tone-green">{article.category}</p><h1>{article.title}</h1><p className="article-summary">{article.summary}</p><time dateTime={article.publishedAt}>{article.publishedAt.slice(0,10)}</time>{parseContent(article.content).map((segment, index) => <Segment key={index} segment={segment}/>)}</article><Comments articleId={article.id}/></main>;
 }
