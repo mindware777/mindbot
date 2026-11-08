@@ -1,0 +1,40 @@
+TODO — mindbot (working notes)
+
+== Done ==
+- 3 Korean articles published with verified official-source YouTube embeds.
+- Article sources live in front matter `sources:`; never rendered.
+- Rules recorded in AGENTS.md: original reporting, visual required, primary
+  media only, article prose Korean, everything else English.
+- Deployed on Cloudflare Workers (commit 02f12e8).
+- Site shell: global header (Home / News / Jobs; the Community menu is
+  commented out until the forum ships), theme toggle (system -> light ->
+  dark), Google sign-in widget in the header.
+- Home is a landing page; full feed with category tabs moved to /news/.
+- /community/ placeholder shipped (topic forum comes later).
+- /jobs/ shipped with structured example listings from Korean robotics
+  companies (lib/jobs.ts). Replace with verified openings over time.
+
+== Next: verify Google login end to end ==
+[ ] Cloudflare build variables (Settings -> Build):
+    NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    (SUPABASE_PUBLISHING_KEY is only for the legacy registration script;
+    operations.md says that script is not part of the current build.)
+[ ] Rebuild after setting variables so the client bundle carries them.
+[ ] Production check: open article -> header login -> Google -> callback ->
+    comment post/edit/delete -> sign out.
+[ ] If comments fail, confirm `supabase db push` applied both migrations to
+    the remote project (legacy comments + forum).
+
+== Next: community build-out (after forum UI migration) ==
+[ ] Switch UI from legacy comments to forum RPCs (lib/forum-database.types.ts).
+[ ] Decide hybrid delivery (OpenNext SSR for community) before writing the
+    community section; static export cannot server-render forum content.
+[ ] Community layout: sidebar categories on desktop, horizontal tabs on mobile,
+    sort filters (latest/popular) with URL state.
+[ ] News section filters already sync to ?category=; mirror that pattern.
+
+== Later ==
+[ ] Real job curation from official career pages (current entries are examples).
+[ ] Dark palette review against DESIGN.md on real screens (mouse/keyboard feel).
+[ ] Repo hygiene: commit only task-required files; never commit secrets,
+    build output, or flarum/; untracked drafts stay local.
