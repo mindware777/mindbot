@@ -26,10 +26,6 @@ export default function CommentThread({articleId}: {articleId: string}) {
     // The thread is mounted for a single immutable article ID.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[articleId]);
-  async function signIn() {
-    try { sessionStorage.setItem("mindbot-return",location.pathname); const {error} = await getSupabase().auth.signInWithOAuth({provider:"google",options:{redirectTo:`${location.origin}/auth/callback/`}}); if(error) throw error; }
-    catch(error) {setError(error instanceof Error ? error.message : "Login failed.");}
-  }
   async function change(action: () => PromiseLike<{error: unknown}>) {
     setBusy(true); setError("");
     try {const {error} = await action(); if(error) throw error; setBody(""); await load();}
@@ -40,6 +36,6 @@ export default function CommentThread({articleId}: {articleId: string}) {
     <button disabled={busy || loading} onClick={() => {setError(""); void load();}}>Refresh</button>
     {rows.map(row => <article className="article" key={row.id}><strong>{row.profiles?.display_name || "Member"}</strong><p style={{whiteSpace:"pre-wrap"}}>{row.body}</p>{row.author_id===user && <div><button disabled={busy} onClick={() => {const updated=prompt("Edit comment",row.body); if(updated?.trim()) void change(() => getSupabase().from("comments").update({body:updated.trim()}).eq("id",row.id));}}>Edit</button> <button disabled={busy} onClick={() => {if(confirm("Delete this comment?")) void change(() => getSupabase().from("comments").delete().eq("id",row.id));}}>Delete</button></div>}</article>)}
     {more && <button disabled={loading} onClick={() => void load(rows.length)}>Load more</button>}
-    {user ? <><form onSubmit={event => {event.preventDefault(); if(body.trim()) void change(() => getSupabase().from("comments").insert({article_id:articleId,author_id:user,body:body.trim()}));}}><label htmlFor="comment-body">Your comment</label><textarea id="comment-body" required maxLength={5000} value={body} onChange={event=>setBody(event.target.value)}/><button disabled={busy || !body.trim()}>Post comment</button></form><button onClick={() => void getSupabase().auth.signOut()}>Sign out</button></> : <button onClick={() => void signIn()}>Continue with Google</button>}
+    {user ? <form onSubmit={event => {event.preventDefault(); if(body.trim()) void change(() => getSupabase().from("comments").insert({article_id:articleId,author_id:user,body:body.trim()}));}}><label htmlFor="comment-body">Your comment</label><textarea id="comment-body" required maxLength={5000} value={body} onChange={event=>setBody(event.target.value)}/><button disabled={busy || !body.trim()}>Post comment</button></form> : <p className="signin-note">Sign in from the header to join the discussion.</p>}
   </div>;
 }
