@@ -10,7 +10,9 @@
     "validate:content": "bun scripts/validate-content.ts",
     "build:pages": "bun run build:workers",
     "test": "bun test",
-    "test:db": "python3 scripts/test-database.py",
+    "test:db": "python3 scripts/test-database.py && python3 scripts/test-forum-database.py",
+    "test:db:update-types": "UPDATE_FORUM_TYPES=1 python3 scripts/test-forum-database.py",
+    "register:articles:local": "bun scripts/register-local-articles.ts",
     "build:workers": "bun run build",
     "deploy": "wrangler deploy",
     "preview:workers": "wrangler dev --local"
